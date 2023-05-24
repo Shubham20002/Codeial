@@ -8,5 +8,7 @@ router.get('/',homecontroller.home);
 
 router.use('/user',require('./user'));
 
-console.log("router loaded");
+router.use('/post',require('./post'));
+
+// console.log("router loaded");
 module.exports=router;
