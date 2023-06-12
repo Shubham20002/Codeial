@@ -1,12 +1,17 @@
 const User=require('../models/user');
 
 module.exports.profile=function(req,res){
+  
    return res.render('user_profile',{
       title:"user_profile"
    })
 }
 
 module.exports.signup=function(req,res){
+   //if user is already signed in then he will not access user/signup
+   if(req.isAuthenticated()){
+      return res.redirect('/user/profile');
+   }
    return res.render('signup',{
       title:"user_profile"
    })
@@ -25,7 +30,7 @@ module.exports.create=function(req,res){
       if(!user){
          User.create(req.body,function(err,user){
             if(err){console.log("error in finding user in sigining up");return}
-            window.alert("user added");
+            
        return res.redirect('/user/signup')
        
          })
@@ -36,3 +41,14 @@ module.exports.create=function(req,res){
       }
    });
 }
+
+module.exports.createsession=function(req,res){
+   return res.redirect('/');
+}
+
+module.exports.destroysession=function(req, res, next) {
+   req.logout(function(err) {
+     if (err) { return next(err); }
+     res.redirect('/');
+   });
+ }
