@@ -3,7 +3,7 @@ const router=express.Router();
 
 const postcontroller=require('../controllers/post_controller');
 
-router.get('/ad',postcontroller.ad);
+router.post('/create',postcontroller.createpost);
 
 
 module.exports=router;

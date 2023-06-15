@@ -1,10 +1,12 @@
 const express=require('express');
 
-
 const router=express.Router();
+const passport=require('passport');
+
+
 const homecontroller=require('../controllers/home_controller');
 
-router.get('/',homecontroller.home);
+router.get('/',passport.checkAuthentication,homecontroller.home);
 
 router.use('/user',require('./user'));
 

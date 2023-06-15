@@ -1,1 +1,22 @@
 <h1>codeial home page render from ejs</h1>
+
+<section id="feed-posts">
+    <h4>Posts</h4>
+    <form action="/post/create" id="new-post-form" method="post">
+        <textarea name="content" cols="30" rows="10" placeholder="add post.."></textarea>
+        <input type="submit" value="Post">
+    </form>
+
+    <div id="post-list-container">
+        <ul>
+            <% for(post of posts){%>
+                
+                <li><p><%= post.content %>
+                    <br>
+                <small><%= post.user.name%></small>
+            </p>
+            </li>
+            <%}%>
+        </ul>
+    </div>
+</section>
