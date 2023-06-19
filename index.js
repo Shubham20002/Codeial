@@ -1,19 +1,21 @@
 const express=require('express');
-const cookieParser=require('cookie-parser');
 const app=express();
 const port=7000;
 const expressLayout=require('express-ejs-layouts');
 const db=require('./config/mongoose');
+const cookieParser=require('cookie-parser');
 //used for seeeion cookie
 const session= require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 const MongoStore=require('connect-mongo');
+const flash=require('connect-flash');
+const customMware=require('./config/middleware');
 
 
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static('./assets'));
+app.use(cookieParser());
 
 app.use(expressLayout);
  //extract the style and script from sub pages to layouts
@@ -44,6 +46,7 @@ app.use(session({
     //         console.log(err || 'connect-mongodb setup ok');
     //     }
     // )
+    //store keyword is used to store cookie in db
     store:MongoStore.create({ mongoUrl: 'mongodb://localhost/codial_development' })
 }));
 
@@ -51,6 +54,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setFlash);
 
 //use express router
 app.use('/',require('./routes'));
